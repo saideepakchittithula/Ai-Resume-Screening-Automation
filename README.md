@@ -286,7 +286,7 @@ The final status is automatically updated in Google Sheets and an email notifica
 ## 👨‍💻 Author
 
 **Sai Deepak Chittithula**  
-AI Automation Engineer — specialising in n8n, LLM integration, and intelligent workflow design
+AI Automation Engineer | n8n | Workflow Automation | LLM Integrations
 
 📧 [saideepakchittithula7898@gmail.com](mailto:saideepakchittithula7898@gmail.com)
 
