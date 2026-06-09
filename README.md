@@ -1,150 +1,217 @@
-# 🤖 AI-Powered Recruitment Automation System
 
-An intelligent recruitment automation solution built using n8n, OpenAI, Google Sheets, Gmail, and JavaScript.
+<div align="center">
+<img width="1774" height="887" alt="title" src="https://github.com/user-attachments/assets/5b8bac5f-eec0-4da6-bcb8-929f9de4464f" />
 
-This project automates the candidate screening process by analyzing resumes, matching skills with job requirements, generating AI-powered interview questions, evaluating candidate responses, calculating scores, and sending automated qualification emails.
 
----
+**An end-to-end recruitment automation pipeline that handles resume screening, AI-driven interviews, candidate scoring, and email notifications — without manual intervention.**
 
-## 🚀 Project Highlights
+[![n8n](https://img.shields.io/badge/Built%20with-n8n-FF6D5A?style=for-the-badge&logo=n8n&logoColor=white)](https://n8n.io)
+[![Gemini](https://img.shields.io/badge/AI-Google%20Gemini%202.5%20Pro-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
+[![Google Sheets](https://img.shields.io/badge/Data-Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)](https://sheets.google.com)
+[![Gmail](https://img.shields.io/badge/Email-Gmail%20API-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](https://gmail.com)
+[![JavaScript](https://img.shields.io/badge/Code-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-- AI-powered resume screening
-- Automated Job Description (JD) matching
-- Dynamic interview question generation
-- Candidate answer evaluation
-- Automated score calculation
-- Google Sheets integration
-- Automated qualification notifications
-- End-to-end recruitment workflow
+</div>
 
 ---
 
-## 🏗 System Architecture
+## 📋 Project Overview
 
-```text
-Candidate Application Form
-          ↓
-Resume Upload
-          ↓
-AI Resume Analysis
-          ↓
-JD Matching
-          ↓
-Question Generation
-          ↓
-Candidate Answers
-          ↓
-AI Evaluation
-          ↓
-Google Sheets Storage
-          ↓
-Email Notification
+This project automates the initial recruitment pipeline for an **AI Automation Engineer** role using n8n, Google Gemini, Google Workspace APIs, and JavaScript.
+
+The system takes a candidate from **application submission to qualification decision** entirely without human involvement — covering resume analysis, JD matching, personalized interview question generation, answer evaluation, scoring, and automated email communication.
+
+Built as a portfolio project to demonstrate real-world AI automation engineering skills including LLM integration, multi-agent workflow design, structured output parsing, and API orchestration.
+
+---
+
+## 📌 Problem Statement
+
+Initial recruitment screening is one of the most time-intensive and repetitive responsibilities in talent acquisition. Recruiters routinely:
+
+- Read through large volumes of resumes that do not meet the job requirements
+- Write and send the same screening questions to every shortlisted candidate
+- Manually score responses with no consistent rubric
+- Track candidate progress by updating spreadsheets by hand
+- Send follow-up and rejection emails one at a time
+
+This creates bottlenecks, inconsistency in evaluation, and limits how many candidates a small team can realistically process. The problem becomes harder to manage as application volume grows.
+
+---
+
+## 💡 Solution
+
+The AI-Powered Recruitment Automation System replaces the manual initial screening process with an automated two-phase pipeline:
+
+- **AI Resume Screening** — Gemini 2.5 Pro reads each resume, extracts skills and experience, and scores the candidate against the Job Description
+- **JD Matching** — Each resume receives a structured match score (0–1) with reasoning, used to route candidates automatically
+- **Dynamic Interview Question Generation** — Qualified candidates receive 5 personalized interview questions generated from their own resume content
+- **AI-Based Answer Evaluation** — Candidate responses are evaluated by the AI and scored per question with structured output
+- **Automated Score Calculation** — JavaScript aggregates individual scores into a total, which determines final qualification status
+- **Google Sheets Integration** — All candidate data, scores, notes, and statuses are written to a live tracking sheet in real time
+- **Automated Email Notifications** — Qualified and rejected candidates both receive appropriate emails automatically via Gmail API
+
+---
+
+## ✨ Key Features
+
+- Two-phase pipeline: resume screening followed by AI interview round
+- Conditional routing — candidates branch based on JD match score
+- Structured JSON output from all AI agents using Output Parsers
+- Personalized interview questions tailored to each candidate's resume
+- Per-question AI scoring with total score aggregation in JavaScript
+- Full candidate tracking in Google Sheets with no manual data entry
+- Automated Gmail notifications at every decision point
+
+---
+
+## 🔄 Workflow Overview
+
+| Stage | Node / Tool | Description |
+|-------|-------------|-------------|
+| 1 | Form Trigger | Candidate submits name, email, phone, resume (PDF), years of experience |
+| 2 | Google Drive | Resume uploaded and stored; file ID extracted |
+| 3 | Google Sheets | Candidate record created with basic details |
+| 4 | Google Drive + PDF Extractor | Resume downloaded and parsed to plain text |
+| 5 | AI Agent (Gemini) | Resume analysed against JD; match score (0–1) returned |
+| 6 | IF Node | Score ≥ threshold → Phase 2; below threshold → rejection email |
+| 7 | AI Agent1 (Gemini) | Generates 5 personalised interview questions |
+| 8 | Form | Dynamic interview form delivered to candidate |
+| 9 | JavaScript | Formats answers; prepares scoring payload |
+| 10 | AI Agent2 (Gemini) | Evaluates each answer; scores out of 10 |
+| 11 | IF1 Node | Total score ≥ threshold → qualified; below → not qualified |
+| 12 | Google Sheets + Gmail | Results stored; qualification or rejection email sent |
+
+---
+
+## 🏗️ System Architecture
+
+```
+PHASE 1 — RESUME SCREENING
+──────────────────────────────────────────────────────────
+
+Form Submission
+    │
+    ▼
+Upload to Google Drive → Extract Resume ID
+    │
+    ▼
+Create / Update Row in Google Sheets
+    │
+    ▼
+Download Resume → Extract PDF Text
+    │
+    ▼
+AI Agent (Gemini + Structured Output Parser)
+    │   Scores resume against Job Description (0–1)
+    │
+    ▼
+IF Score ≥ threshold?
+    ├── YES → Update Sheet (Qualified) → Phase 2
+    └── NO  → Update Sheet (Rejected) → Rejection Email (Gmail)
+
+
+PHASE 2 — AI INTERVIEW
+──────────────────────────────────────────────────────────
+
+AI Agent1 (Gemini + Structured Output Parser)
+    │   Generates 5 personalised interview questions
+    │
+    ▼
+Dynamic Interview Form → Candidate submits answers
+    │
+    ▼
+JavaScript → Formats responses, prepares scoring input
+    │
+    ▼
+AI Agent2 (Gemini + Structured Output Parser)
+    │   Evaluates each answer, scores out of 10
+    │
+    ▼
+IF Total Score ≥ threshold?
+    ├── YES → Update Sheet (Final Qualified) → Congrats Email (Gmail)
+    └── NO  → Update Sheet (Final Rejected) → Rejection Email (Gmail)
 ```
 
 ---
 
-## ✨ Features
+## 📸 Demo
 
-- Resume collection through online forms
-- AI-powered resume analysis
-- Skills extraction and matching
-- Automated interview question generation
-- Candidate answer evaluation
-- Automated score calculation
-- Qualification filtering
-- Google Sheets integration
-- Automated email notifications
-- Recruitment data management
-
----
-
-<img width="1366" height="4608" alt="hire3" src="https://github.com/user-attachments/assets/c6966dd1-a965-4177-b287-62922ffbf8ae" />
+### Candidate Application Form
+### Step-1
+<img width="1536" height="1024" alt="ChatGPT Image Jun 9, 2026, 10_57_49 PM" src="https://github.com/user-attachments/assets/96d3f410-e91d-4dd3-a4bd-c0d553b96705" />
 
 
----
+### n8n Automation Workflow
+### Step-2
+![n8n Workflow](screenshots/step2_n8n_workflow.png)
 
-## 🛠 Technology Stack
 
-- n8n
-- OpenAI GPT
-- Google Sheets
-- Gmail
-- JavaScript
-- Webhooks
-- Resume Parsing
-- Prompt Engineering
+### AI Interview Question Generation
+### Step-3
+<img width="1536" height="1024" alt="step3" src="https://github.com/user-attachments/assets/df77a14b-195d-41e8-bede-dafc485cddea" />
 
----
 
-## ⚙ Workflow Process
 
-1. Candidate submits resume and details
-2. Resume is uploaded and processed
-3. AI extracts skills and experience
-4. Resume is matched against Job Description
-5. AI generates 5 personalized interview questions
-6. Candidate submits answers
-7. AI evaluates responses
-8. Individual scores are calculated
-9. Total score is generated
-10. Qualification status is determined
-11. Results are stored in Google Sheets
-12. Automated email notifications are sent
+
+
+### Candidate Evaluation Dashboard (Google Sheets)
+### Step-4
+<img width="1536" height="1024" alt="step4" src="https://github.com/user-attachments/assets/32735f59-c842-4649-b14c-d47e82e5fbc2" />
+
+
+### Automated Qualification Email
+### Step-5
+<img width="1536" height="1024" alt="step5" src="https://github.com/user-attachments/assets/c8269d33-3f09-4a3f-8558-2f4ab4b09b64" />
+
 
 ---
 
-## 📊 Automation Results
+## 🛠️ Tech Stack
 
-- 95% Resume Matching Accuracy
-- Automated Candidate Screening
-- Dynamic AI Question Generation
-- Automated Candidate Evaluation
-- Real-Time Qualification Tracking
-- End-to-End Recruitment Automation
-- Reduced Manual Screening Effort
-
----
-
-## n8n Workflow
-
-<img width="1029" height="704" alt="Screenshot 2026-06-09 151450" src="https://github.com/user-attachments/assets/17a9a0ef-dfc1-46d5-ab97-d686ba1176db" />
+| Category | Tool / Technology |
+|----------|------------------|
+| **Workflow Automation** | n8n (self-hosted) |
+| **AI / LLM** | Google Gemini 2.5 Pro via LangChain nodes |
+| **Output Parsing** | n8n Structured Output Parser (JSON schema) |
+| **File Storage** | Google Drive API |
+| **Data Tracking** | Google Sheets API |
+| **Email Automation** | Gmail API |
+| **Scripting** | JavaScript (score aggregation, data formatting) |
+| **Integration** | Webhooks, REST APIs, OAuth2 |
+| **Prompt Design** | Structured prompt engineering for consistent AI output |
 
 ---
 
-## 🎯 Skills Demonstrated
+## 🔮 Planned Enhancements
 
-- AI Automation
-- Workflow Automation
-- n8n Development
-- OpenAI Integration
-- Prompt Engineering
-- Google Sheets API
-- Gmail Automation
-- JavaScript
-- Process Automation
-- Recruitment Workflow Design
+- [ ] AI voice interview round (ElevenLabs + Whisper)
+- [ ] Multi-round interview automation
+- [ ] ATS integration
+- [ ] Real-time analytics dashboard (Looker Studio)
+- [ ] WhatsApp notifications via Twilio
+- [ ] Multi-job posting support
 
 ---
 
-## 🔮 Future Enhancements
+## 🧠 Skills Demonstrated
 
-- AI Voice Interviews
-- Multi-round Interview Automation
-- LinkedIn Integration
-- ATS Integration
-- Candidate Ranking System
-- Real-time Analytics Dashboard
-- WhatsApp Notifications
-- Multi-Job Recruitment Support
+| Domain | Skills |
+|--------|--------|
+| **AI & LLM** | Prompt Engineering · Structured Output Parsing · Multi-Agent Design · Google Gemini API |
+| **Automation** | n8n · Workflow Orchestration · Conditional Logic · Event-Driven Architecture |
+| **API Integration** | Google Drive API · Google Sheets API · Gmail API · REST APIs · OAuth2 · Webhooks |
+| **Development** | JavaScript · JSON Schema · Data Transformation · Process Automation |
+| **Domain** | Recruitment Workflow Automation · HR Tech · End-to-End Pipeline Design |
 
 ---
 
 ## 👨‍💻 Author
 
-**Sai Deepak**
+**Sai Deepak Chittithula**  
+AI Automation Engineer — specialising in n8n, LLM integration, and intelligent workflow design
 
-AI Automation Engineer | n8n | OpenAI | Workflow Automation
+📧 [saideepakchittithula7898@gmail.com](mailto:saideepakchittithula7898@gmail.com)
 
 ---
 
-## ⭐ If you found this project useful, consider giving it a star on GitHub.
