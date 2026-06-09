@@ -134,6 +134,26 @@ IF Total Score ≥ threshold?
 ```
 
 ---
+## 📁 Repository Structure
+
+```text
+AI-Recruitment-Automation
+│
+├── README.md
+├── workflow
+│   └── recruitment_automation.json
+│
+├── screenshots
+│   ├── step1_candidate_form.png
+│   ├── step2_n8n_workflow.png
+│   ├── step3_ai_questions.png
+│   ├── step4_google_sheet.png
+│   └── step5_qualification_email.png
+│
+└── docs
+    └── architecture_diagram.png
+```
+---
 
 ## 📸 Demo
 
@@ -180,6 +200,42 @@ IF Total Score ≥ threshold?
 | **Scripting** | JavaScript (score aggregation, data formatting) |
 | **Integration** | Webhooks, REST APIs, OAuth2 |
 | **Prompt Design** | Structured prompt engineering for consistent AI output |
+
+---
+
+## 🚀 Key Automation Logic
+
+### Resume Qualification
+
+Candidates are evaluated against the job description using Google Gemini. The AI returns:
+
+* Match Score (0–1)
+* Matching Skills
+* Missing Skills
+* Qualification Reasoning
+
+### Interview Evaluation
+
+Each candidate answer is scored from 0–10 based on:
+
+* Technical Accuracy
+* Problem Solving Ability
+* Communication Clarity
+* Relevant Experience
+
+### Final Decision
+
+```text
+Total Score = Q1 + Q2 + Q3 + Q4 + Q5
+
+If Total Score ≥ 30
+    → Qualified
+
+Else
+    → Rejected
+```
+
+The final status is automatically updated in Google Sheets and an email notification is sent through Gmail.
 
 ---
 
