@@ -21,7 +21,7 @@ This project automates the initial recruitment pipeline for an **AI Automation E
 
 The system takes a candidate from **application submission to qualification decision** entirely without human involvement — covering resume analysis, JD matching, personalized interview question generation, answer evaluation, scoring, and automated email communication.
 
-Built as a portfolio project to demonstrate real-world AI automation engineering skills including LLM integration, multi-agent workflow design, structured output parsing, and API orchestration.
+Designed and implemented as an end-to-end AI recruitment automation solution showcasing workflow orchestration, LLM integration, structured output parsing, API integrations, and intelligent decision-making using n8n and Google Gemini.
 
 ---
 
@@ -63,6 +63,27 @@ The AI-Powered Recruitment Automation System replaces the manual initial screeni
 - Full candidate tracking in Google Sheets with no manual data entry
 - Automated Gmail notifications at every decision point
 
+---
+## 📊 Project Impact
+
+This automation significantly reduces manual recruitment effort by automating the complete initial screening process.
+
+### Benefits
+
+* Eliminates repetitive resume screening tasks
+* Provides consistent candidate evaluation using AI
+* Reduces recruiter workload and response time
+* Maintains structured candidate records automatically
+* Scales efficiently for high application volumes
+* Improves candidate experience through instant communication
+
+### Performance Metrics
+
+* Resume Screening Time: Under 1 minute per candidate
+* Interview Question Generation: 5 personalized questions automatically
+* Candidate Evaluation: Automated scoring out of 50
+* Data Tracking: Real-time updates in Google Sheets
+* Communication: Automated qualification and rejection emails
 ---
 
 ## 🔄 Workflow Overview
