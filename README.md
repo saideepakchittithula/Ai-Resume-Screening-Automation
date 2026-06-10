@@ -185,15 +185,12 @@ AI-Recruitment-Automation
 
 ### n8n Automation Workflow
 ### Step-2
-![n8n Workflow](screenshots/step2_n8n_workflow.png)
+<img width="1029" height="704" alt="Screenshot 2026-06-09 151450" src="https://github.com/user-attachments/assets/4b4a72e3-31cd-4ced-b334-3a818f98cdd8" />
 
 
 ### AI Interview Question Generation
 ### Step-3
 <img width="1536" height="1024" alt="step3" src="https://github.com/user-attachments/assets/df77a14b-195d-41e8-bede-dafc485cddea" />
-
-
-
 
 
 ### Candidate Evaluation Dashboard (Google Sheets)
